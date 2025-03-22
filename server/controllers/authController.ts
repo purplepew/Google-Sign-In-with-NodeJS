@@ -7,12 +7,11 @@ import { jwtDecode } from 'jwt-decode'
 type Props = (req: Request, res: Response) => any
 
 export const redirectToGoogleSignIn: Props = async (req, res) => {
-    const redirectUrl = 'http://localhost:3500/auth/google/callback'
 
     const oAuth2Client = new OAuth2Client(
         process.env.GOOGLE_ID,
         process.env.GOOGLE_SECRET,
-        redirectUrl
+        process.env.CALLBACK_REDIRECT_URI
     )
 
     const authorizedUrl = oAuth2Client.generateAuthUrl({
@@ -20,26 +19,23 @@ export const redirectToGoogleSignIn: Props = async (req, res) => {
         scope: 'https://www.googleapis.com/auth/userinfo.profile openid email profile',
         prompt: 'consent'
     })
-
+    
     res.json({ url: authorizedUrl }) // Link to Google Sign In Page after successful log in, it will give us a code and google will send a request to the callback (redirectUrl variable) passing {query: code: <random_value> }
 
 }
 
 export const handleGoogleCallback: Props = async (req, res) => {
     const code = req.query.code as string
-
     if(!code){
         return res.status(400).json({message: 'Google Authorization Code is required'})
     }
     
     try {
         
-        const redirectUrl = 'http://localhost:3500/auth/google/callback'
-        
         const oAuth2Client = new OAuth2Client(
             process.env.GOOGLE_ID,
             process.env.GOOGLE_SECRET,
-            redirectUrl
+            process.env.CALLBACK_REDIRECT_URI
         )
         
         const { tokens } = await oAuth2Client.getToken(code) // exchange code for token
@@ -63,11 +59,12 @@ export const handleGoogleCallback: Props = async (req, res) => {
             { expiresIn: `15m` } 
         )
 
-
         res.cookie('jwt', refreshToken, {
             httpOnly: true, secure: true, sameSite: 'none', maxAge: 7 * 24 * 60 * 60 * 1000
         })
-        res.redirect(303, 'http://localhost:5173')
+
+        res.redirect(303, process.env.FRONTEND_URL as string)
+
     } catch (error) {
         console.log('Error with signing with google')
     }
