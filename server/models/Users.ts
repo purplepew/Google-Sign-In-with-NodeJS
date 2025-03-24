@@ -1,21 +1,17 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 
-interface UserProps {
+export interface UserProps {
     googleId: string, // credentials.sub
     name: string,
-    firstName: string,
-    lastName: string,
     email: string,
-    image: string
+    image: string,
 }
 
 const user = new mongoose.Schema<UserProps>({
     googleId: {type: String, required: true},
     email: {type: String, required: true},
     name: String,
-    firstName: String,
-    lastName: String,
-    image: String
+    image: String,
 })
 
-export default mongoose.model('user', user)
+export default mongoose.model<UserProps>('user', user)
