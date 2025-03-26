@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import Authorize from './features/auth/Authorize'
 import Public2 from './components/Public2'
 import Login from './components/Login'
+import ProfileForm from './features/profile/ProfileForm'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
 
           <Route path='/public2' element={<Public2 />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/profile' element={<ProfileForm />} />
         </Route>
       </Route>
     </Routes>

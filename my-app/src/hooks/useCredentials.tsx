@@ -18,10 +18,11 @@ const useCredentials = () => {
         const googleId = decoded.UserInfo.googleId
         const name = decoded.UserInfo.name
         const email = decoded.UserInfo.email
+        const image = decoded.UserInfo.image
 
-        return { googleId, name, email }
+        return { googleId, name, email, image}
     }
-    return { googleId: '', name: '', email: '' }
+    return { googleId: null, name: null, email: null, image: null }
 }
 
 export default useCredentials

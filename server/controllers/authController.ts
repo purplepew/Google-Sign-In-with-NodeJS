@@ -19,12 +19,12 @@ export const redirectToGoogleSignIn = asyncHandler(async (req, res) => {
     })
 
     // Link to Google Sign In Page after successful log in, it will give us a code and google will send a request to the callback (redirectUrl variable) passing {query: code: <random_value> }
-    res.json({ url: authorizedUrl }) 
+    res.json({ url: authorizedUrl })
 })
 
 export const handleGoogleCallback = asyncHandler(async (req, res) => {
     const code = req.query.code as string
-    
+
     if (!code) {
         res.status(400).json({ message: 'Google Authorization Code is required' })
         return
@@ -79,12 +79,13 @@ export const handleGoogleCallback = asyncHandler(async (req, res) => {
             image: decoded.picture,
         }
         await Users.create(userObject)
-    } else {
-        // Migration logic (uncomment when needed) AND UPDATE THE TYPE FOR THE MODEL SCHEMA
-        //if (!foundUser.newKey) {
-        //     await Users.updateOne({ googleId: decoded.sub }, { $set: { newKey: 0 } });
-        // }
     }
+    // else {
+    // Migration logic (uncomment when needed) AND UPDATE THE TYPE FOR THE MODEL SCHEMA
+    //    if (!foundUser.newKey) {
+    //     await Users.updateOne({ googleId: decoded.sub }, { $set: { newKey: 0 } });
+    //     }
+    // }
 })
 
 export const refreshToken = asyncHandler(async (req, res) => {
