@@ -2,7 +2,8 @@ import dotenv from 'dotenv'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import authRoute from './routes/authRoute'
-import testRoute from './routes/testRoute'
+import fileRoute from './routes/fileRoute'
+import userRoute from './routes/userRoute'
 import cors from 'cors'
 import dbConnect from './config/dbConnect'
 import mongoose from 'mongoose'
@@ -20,7 +21,7 @@ mongoose.connection.once('open', () => {
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`)
     })
-
+    
 })
 
 mongoose.connection.on('error', err => {
@@ -29,10 +30,12 @@ mongoose.connection.on('error', err => {
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }))
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true })) // Change when deploying
+app.use('/uploads', express.static('uploads'))
 
 app.use('/auth', authRoute)
-app.use('/test', testRoute)
+app.use('/file', fileRoute)
+app.use('/user', userRoute)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     console.log('An error happened', err)

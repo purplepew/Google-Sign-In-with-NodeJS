@@ -4,7 +4,7 @@ import Layout from './components/Layout'
 import Authorize from './features/auth/Authorize'
 import Public2 from './components/Public2'
 import Login from './components/Login'
-import ProfileForm from './features/profile/ProfileForm'
+import ProfileForm from './features/profile/Adapter'
 
 function App() {
   return (

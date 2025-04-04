@@ -7,6 +7,8 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { Paper } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
+import DisplayName from './DisplayName'
+import DisplayPicture from './DisplayPicture'
 
 const ProfileForm = () => {
 
@@ -26,30 +28,12 @@ const ProfileForm = () => {
             <Box component={Paper} sx={{ width: 300, minHeight: 525, p: '1rem', display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography>Profile</Typography>
                 <Divider />
-                <TextField
-                    label='Display name'
-                    sx={{
-                        '& > .MuiInputLabel-shrink': {
-                            color: '#9f9f9f'
-                        }
-                    }}
-                />
-                <TextField
-                    label='Add your pronouns'
-                    sx={{
-                        '& > .MuiInputLabel-shrink': {
-                            color: '#9f9f9f'
-                        }
-                    }}
-                />
+
+                <DisplayName />
 
                 <Divider />
 
-                <Button color='secondary' variant='contained' sx={{ mr: 'auto' }} size='small'>Change Avatar</Button>
-
-                <Divider />
-
-                <Button color='secondary' variant='contained' sx={{ mr: 'auto' }} size='small'>Profile Banner</Button>
+                <DisplayPicture />
 
                 <Divider />
 

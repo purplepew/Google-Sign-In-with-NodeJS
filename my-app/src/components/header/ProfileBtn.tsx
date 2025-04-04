@@ -16,7 +16,11 @@ const ProfileBtn = ({ image, name }: { image: string, name: string }) => {
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
     const openMenu = Boolean(anchorEl)
-    
+
+    if(image && image.indexOf('uploads') !== -1){
+        console.log('1')
+        image = 'http://localhost:3500/' + image;
+    }
 
     const [logout] = useLogoutMutation()
 

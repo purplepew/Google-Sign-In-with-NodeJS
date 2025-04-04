@@ -27,7 +27,7 @@ const AuthBtn = () => {
 
     let button: JSX.Element
 
-    if (image) {
+    if (image || name) {
         button = <ProfileBtn image={image} name={name} />
     } else {
         button = <Button onClick={handleSignIn} color='secondary' variant='outlined' startIcon={<GoogleIcon />}>Sign in</Button>
